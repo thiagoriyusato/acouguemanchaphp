@@ -26,10 +26,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Detalhes da pessoa
+                        <h4>Detalhes do funcionário
                             <?php
                         if($_SESSION["tipo"] == 1){
-                            echo "<a href='person_create.php' class='btn btn-primary float-end'>Adicionar Pessoa</a>";
+                            echo "<a href='worker_create.php' class='btn btn-primary float-end'>Adicionar funcionario</a>";
                         }
                             ?>
                         </h4>
@@ -43,30 +43,34 @@
                                     <th>Nome</th>
                                     <th>Endereço</th>
                                     <th>CPF</th>
+                                    <th>Cargo</th>
+                                    <th>Salário</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                    $query = "SELECT * FROM tbpessoas";
+                                    $query = "SELECT f.id idFuncionario, f.idPessoa, f.idCargo, f.salario, p.id idPessoa1 , p.endereco , p.nome, p.cpf, c.id idCargo1, c.descricao FROM tbfuncionarios f, tbpessoas p, tbcargos c WHERE f.idPessoa = p.id AND f.idCargo = c.id ORDER BY f.id ASC";
                                     $query_run = mysqli_query($con, $query);
 
                                     if(mysqli_num_rows($query_run) > 0)
                                     {
-                                        foreach($query_run as $tbpessoas)
+                                        foreach($query_run as $tbfuncionarios)
                                         {
                                             ?>
                                             <tr>
-                                                <td><?= $tbpessoas['id']; ?></td>
-                                                <td><?= $tbpessoas['nome']; ?></td>
-                                                <td><?= $tbpessoas['endereco']; ?></td>
-                                                <td><?= $tbpessoas['cpf']; ?></td>
+                                                <td><?= $tbfuncionarios['idFuncionario']; ?></td>
+                                                <td><?= $tbfuncionarios['nome']; ?></td>
+                                                <td><?= $tbfuncionarios['endereco']; ?></td>
+                                                <td><?= $tbfuncionarios['cpf']; ?></td>
+                                                <td><?= $tbfuncionarios['descricao']; ?></td>
+                                                <td>R$<?= $tbfuncionarios['salario']; ?></td>
                                                 <td>
                                                     <?php if($_SESSION["tipo"] == 1){
-                                                        echo "<a href='person_view.php?id={$tbpessoas['id']}' class='btn btn-info btn-sm'>Visualizar</a>";
+                                                        echo "<a href='worker_view.php?idFuncionario={$tbfuncionarios['idFuncionario']}' class='btn btn-info btn-sm'>Visualizar</a>";
                                                         echo " ";
-                                                        echo "<a href='person_edit.php?id={$tbpessoas['id']}' class='btn btn-success btn-sm'>Editar</a>";
+                                                        echo "<a href='worker_edit.php?idFuncionario={$tbfuncionarios['idFuncionario']}' class='btn btn-success btn-sm'>Editar</a>";
                                                         echo "<form action='code.php' method='POST' class='d-inline'>
-                                                                <button type='submit' name='delete_person' value='{$tbpessoas['id']}' class='btn btn-danger btn-sm'>Deletar</button>
+                                                                <button type='submit' name='delete_worker' value='{$tbfuncionarios['idFuncionario']}' class='btn btn-danger btn-sm'>Deletar</button>
                                                                 </form>";
                                                     }
                                                     ?>
@@ -77,7 +81,7 @@
                                     }
                                     else
                                     {
-                                        echo "<h5> Nenhuma pessoa cadastrada </h5>";
+                                        echo "<h5> Nenhum funcionario cadastrado </h5>";
                                     }
                                 ?>
                                 
@@ -90,7 +94,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

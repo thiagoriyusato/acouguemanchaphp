@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2023 at 04:03 AM
+-- Generation Time: Apr 30, 2023 at 05:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -66,6 +66,19 @@ INSERT INTO `tbcategoria` (`id`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbclientes`
+--
+
+CREATE TABLE `tbclientes` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `CPF` varchar(14) NOT NULL,
+  `endereco` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbcontas`
 --
 
@@ -84,7 +97,8 @@ INSERT INTO `tbcontas` (`id`, `email`, `senha`, `tipo`) VALUES
 (1, 'joao@gmail.com', '$2y$10$DN0YmgO2iVKLSGvDFWjoFe52yEas4ip4fhf7GKsyByHSUhL/cpZXe', 1),
 (2, 'thiago@gmail.com', '$2y$10$DN0YmgO2iVKLSGvDFWjoFe52yEas4ip4fhf7GKsyByHSUhL/cpZXe', 2),
 (3, 'job@gmail.com', '$2y$10$DN0YmgO2iVKLSGvDFWjoFe52yEas4ip4fhf7GKsyByHSUhL/cpZXe', 3),
-(4, 'tes@gag', '$2y$10$DN0YmgO2iVKLSGvDFWjoFe52yEas4ip4fhf7GKsyByHSUhL/cpZXe', 1);
+(4, 'tes@gag', '$2y$10$DN0YmgO2iVKLSGvDFWjoFe52yEas4ip4fhf7GKsyByHSUhL/cpZXe', 1),
+(6, 'teste@gmail.com', '$2y$10$zIiH28fyEh3QeVZzTjr/2.OPsgaaRGCgRMWDWF8nwIzwXW7zCa9Gi', 0);
 
 -- --------------------------------------------------------
 
@@ -116,7 +130,7 @@ CREATE TABLE `tbfuncionarios` (
   `id` int(11) NOT NULL,
   `idPessoa` int(11) NOT NULL,
   `idCargo` int(11) NOT NULL,
-  `salario` double NOT NULL
+  `salario` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -124,9 +138,35 @@ CREATE TABLE `tbfuncionarios` (
 --
 
 INSERT INTO `tbfuncionarios` (`id`, `idPessoa`, `idCargo`, `salario`) VALUES
-(1, 1, 4, 3000),
-(2, 3, 2, 2000),
-(3, 4, 3, 1000);
+(1, 1, 4, 3000.00),
+(2, 3, 4, 0.00),
+(3, 4, 3, 1000.00),
+(4, 10, 4, 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbpedidos`
+--
+
+CREATE TABLE `tbpedidos` (
+  `id` int(11) NOT NULL,
+  `idCliente` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbpedidosprodutos`
+--
+
+CREATE TABLE `tbpedidosprodutos` (
+  `id` int(11) NOT NULL,
+  `idPedido` int(11) NOT NULL,
+  `idProduto` int(11) NOT NULL,
+  `quantidade` float NOT NULL,
+  `preco` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -150,7 +190,35 @@ INSERT INTO `tbpessoas` (`id`, `nome`, `email`, `endereco`, `cpf`) VALUES
 (1, 'Joao Augusto', 'joao_rp14@hotmail.com', 'jardim nunes', '111.222.333/44'),
 (2, 'Job', 'gabrielpjob@gmail.com', 'mirassol', '222.333.444/55'),
 (3, 'Thiago', 'thiago.sato01@gmail.com', 'rio preto', '333.444.555/66'),
-(4, 'Giovanna', 'gimaiotto@gmail.com', 'bady', '111.222.345/55');
+(4, 'Giovanna', 'gimaiotto@gmail.com', 'bady', '111.222.345/55'),
+(10, 'Cliente 1', 'cliente1@gmail.com', 'enderecocliente1', '111.111.111/22'),
+(11, 'Teste', 'teste@hotmail.com', 'testando', '111.111.111/77');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbprodutos`
+--
+
+CREATE TABLE `tbprodutos` (
+  `id` int(11) NOT NULL,
+  `preco` decimal(10,2) NOT NULL,
+  `categoria` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `descricao` varchar(100) NOT NULL,
+  `idFornecedor` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbprodutos`
+--
+
+INSERT INTO `tbprodutos` (`id`, `preco`, `categoria`, `quantidade`, `descricao`, `idFornecedor`) VALUES
+(1, 55.00, 1, 10, 'Picanha', 1),
+(2, 46.99, 1, 10, 'Alacatra', 1),
+(3, 20.99, 4, 10, 'Linguiça Suína', 1),
+(5, 32.99, 1, 10, 'Ponta de Peito', 1),
+(6, 14.49, 3, 10, 'Peito de Frango', 1);
 
 -- --------------------------------------------------------
 
@@ -189,6 +257,12 @@ ALTER TABLE `tbcategoria`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbclientes`
+--
+ALTER TABLE `tbclientes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbcontas`
 --
 ALTER TABLE `tbcontas`
@@ -210,10 +284,33 @@ ALTER TABLE `tbfuncionarios`
   ADD KEY `fk_FunCar` (`idCargo`);
 
 --
+-- Indexes for table `tbpedidos`
+--
+ALTER TABLE `tbpedidos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkPedCli` (`idCliente`);
+
+--
+-- Indexes for table `tbpedidosprodutos`
+--
+ALTER TABLE `tbpedidosprodutos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_PPPe` (`idPedido`),
+  ADD KEY `fk_PPPr` (`idProduto`);
+
+--
 -- Indexes for table `tbpessoas`
 --
 ALTER TABLE `tbpessoas`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbprodutos`
+--
+ALTER TABLE `tbprodutos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_ProFor` (`idFornecedor`),
+  ADD KEY `fk_ProCat` (`categoria`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -232,10 +329,16 @@ ALTER TABLE `tbcategoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `tbclientes`
+--
+ALTER TABLE `tbclientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tbcontas`
 --
 ALTER TABLE `tbcontas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbfornecedores`
@@ -247,13 +350,31 @@ ALTER TABLE `tbfornecedores`
 -- AUTO_INCREMENT for table `tbfuncionarios`
 --
 ALTER TABLE `tbfuncionarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tbpedidos`
+--
+ALTER TABLE `tbpedidos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbpedidosprodutos`
+--
+ALTER TABLE `tbpedidosprodutos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbpessoas`
 --
 ALTER TABLE `tbpessoas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `tbprodutos`
+--
+ALTER TABLE `tbprodutos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -271,6 +392,26 @@ ALTER TABLE `tbfornecedores`
 ALTER TABLE `tbfuncionarios`
   ADD CONSTRAINT `fk_FunCar` FOREIGN KEY (`idCargo`) REFERENCES `tbcargos` (`id`),
   ADD CONSTRAINT `fk_PesFun` FOREIGN KEY (`idPessoa`) REFERENCES `tbpessoas` (`id`);
+
+--
+-- Constraints for table `tbpedidos`
+--
+ALTER TABLE `tbpedidos`
+  ADD CONSTRAINT `fkPedCli` FOREIGN KEY (`idCliente`) REFERENCES `tbclientes` (`id`);
+
+--
+-- Constraints for table `tbpedidosprodutos`
+--
+ALTER TABLE `tbpedidosprodutos`
+  ADD CONSTRAINT `fk_PPPe` FOREIGN KEY (`idPedido`) REFERENCES `tbpedidos` (`id`),
+  ADD CONSTRAINT `fk_PPPr` FOREIGN KEY (`idProduto`) REFERENCES `tbprodutos` (`id`);
+
+--
+-- Constraints for table `tbprodutos`
+--
+ALTER TABLE `tbprodutos`
+  ADD CONSTRAINT `fk_ProCat` FOREIGN KEY (`categoria`) REFERENCES `tbcategoria` (`id`),
+  ADD CONSTRAINT `fk_ProFor` FOREIGN KEY (`idFornecedor`) REFERENCES `tbfornecedores` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -74,4 +74,52 @@ if(isset($_POST['save_person']))
     }
 }
 
+if(isset($_POST['save_worker']))
+{
+    $pessoa = mysqli_real_escape_string($con, $_POST['pessoaid']);
+    $cargo = mysqli_real_escape_string($con, $_POST['cargoid']);
+    $salario = mysqli_real_escape_string($con, $_POST['salario']);
+
+    $query = "INSERT INTO tbfuncionarios (idPessoa,idCargo,salario) VALUES ('$pessoa','$cargo','$salario')";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {
+        $_SESSION['message'] = "Funcionário cadastrado com sucesso!";
+        header("Location: worker_create.php");
+        exit(0);
+    }
+    else
+    {
+        $_SESSION['message'] = "Pessoa não cadastrada";
+        header("Location: person_create.php");
+        exit(0);
+    }
+}
+
+if(isset($_POST['update_worker']))
+{
+    $tbfuncionarios_id = mysqli_real_escape_string($con, $_POST['tbfuncionarios_id']);
+
+    $salario = mysqli_real_escape_string($con, $_POST['salario']);
+    $cargo = mysqli_real_escape_string($con, $_POST['cargoid']);
+
+    $query = "UPDATE tbfuncionarios SET salario='$salario', idCargo='$cargo' WHERE id='$tbfuncionarios_id' ";
+    $query_run = mysqli_query($con, $query);
+
+    if($query_run)
+    {
+        $_SESSION['message'] = "Funcionario atualizado com sucesso";
+        header("Location: worker.php");
+        exit(0);
+    }
+    else
+    {
+        $_SESSION['message'] = "Funcionario não atualizado";
+        header("Location: worker.php");
+        exit(0);
+    }
+
+}
+
 ?>

@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validar credenciais
     if(empty($email_err) && empty($senha_err)){
         // Prepare uma declaração selecionada
-        $sql = "SELECT id, email, senha FROM tbcontas WHERE email = :email";
+        $sql = "SELECT id, email, senha, tipo FROM tbcontas WHERE email = :email";
         
         if($stmt = $pdo->prepare($sql)){
             // Vincule as variáveis à instrução preparada como parâmetros
@@ -124,7 +124,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>    
             <div class="mb-3">
                 <label>Senha</label>
-                <input type="senha" name="senha" class="form-control <?php echo (!empty($senha_err)) ? 'is-invalid' : ''; ?>">
+                <input type="password" name="senha" class="form-control <?php echo (!empty($senha_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $senha_err; ?></span>
             </div>
             <div class="mb-3">

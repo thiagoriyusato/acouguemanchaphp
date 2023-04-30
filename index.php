@@ -3,11 +3,7 @@
 session_start();
 require_once "topo.php";
  
-// Verifique se o usuário está logado, se não, redirecione-o para uma página de login
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-}
+require_once "verifyloggedin.php";
 ?>
  
 <!DOCTYPE html>
@@ -22,9 +18,5 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <body>
     <h1 class="my-5">Olá <b><?php echo htmlspecialchars($_SESSION["email"]); ?></b>!</h1>
-    <p>
-        <a href="reset-password.php" class="btn btn-warning">Redefina sua senha</a>
-        <a href="logout.php" class="btn btn-danger ml-3">Sair da conta</a>
-    </p>
 </body>
 </html>

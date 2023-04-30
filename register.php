@@ -94,7 +94,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro</title>
+    <title>Cadastro de Funcionário</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <style>
         body{ font: 14px sans-serif; }
@@ -120,12 +120,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>    
             <div class="mb-3">
                 <label>Senha</label>
-                <input type="senha" name="senha" class="form-control <?php echo (!empty($senha_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $senha; ?>">
+                <input type="password" name="senha" class="form-control <?php echo (!empty($senha_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $senha; ?>">
                 <span class="invalid-feedback"><?php echo $senha_err; ?></span>
             </div>
             <div class="mb-3">
                 <label>Confirme a senha</label>
-                <input type="senha" name="confirm_senha" class="form-control <?php echo (!empty($confirm_senha_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_senha; ?>">
+                <input type="password" name="confirm_senha" class="form-control <?php echo (!empty($confirm_senha_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_senha; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_senha_err; ?></span>
             </div>
             <div class="mb-3">

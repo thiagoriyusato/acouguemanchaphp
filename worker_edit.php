@@ -27,44 +27,52 @@ require_once "verifyloggedin.php";
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Editar pessoa
-                            <a href="person.php" class="btn btn-danger float-end">VOLTAR</a>
+                        <h4>Editar funcionário
+                            <a href="worker.php" class="btn btn-danger float-end">VOLTAR</a>
                         </h4>
                     </div>
                     <div class="card-body">
 
-                        <?php
-                        if(isset($_GET['id']))
+                    <?php
+                        if(isset($_GET['idFuncionario']))
                         {
-                            $tbpessoas_id = mysqli_real_escape_string($con, $_GET['id']);
-                            $query = "SELECT * FROM tbpessoas WHERE id='$tbpessoas_id' ";
+                            $tbfuncionarios_id = mysqli_real_escape_string($con, $_GET['idFuncionario']);
+                            $query = "SELECT * FROM tbfuncionarios, tbpessoas, tbcargos WHERE tbfuncionarios.id = '$tbfuncionarios_id' AND tbfuncionarios.idPessoa = tbpessoas.id AND tbfuncionarios.idCargo = tbcargos.id";
                             $query_run = mysqli_query($con, $query);
 
                             if(mysqli_num_rows($query_run) > 0)
                             {
-                                $tbpessoas = mysqli_fetch_array($query_run);
+                                $tbfuncionarios = mysqli_fetch_array($query_run);
                                 ?>
                                 <form action="code.php" method="POST">
-                                    <input type="hidden" name="tbpessoas_id" value="<?= $tbpessoas['id']; ?>">
+                                    <input type="hidden" name="tbfuncionarios_id" value="<?= $tbfuncionarios['id']; ?>">
+                                    <div class="mb-3">
+                                        <label>Salário</label>
+                                        <input type="text" name="endereco" value="<?=$tbfuncionarios['salario'];?>" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                    <label> Cargo </label>
+                        <select class="custom-select" name="cargoid">
+                        <option selected>Escolha...</option>
+                        <?php 
+                            $query2 = "SELECT * FROM tbcargos";
+                            $query_run2 = mysqli_query($con, $query2);
+                                foreach($query_run2 as $tbcargos)
+                                {
+                                    ?>
 
-                                    <div class="mb-3">
-                                        <label>Nome</label>
-                                        <input type="text" name="nome" value="<?=$tbpessoas['nome'];?>" class="form-control">
+
+                            <option value="<?php echo $tbcargos['id']; ?>"><?php echo $tbcargos['descricao']; ?></option>
+
+                        <?php }?>
+                        </select>
                                     </div>
+                                
                                     <div class="mb-3">
-                                        <label>Email</label>
-                                        <input type="email" name="email" value="<?=$tbpessoas['email'];?>" class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label>Endereco</label>
-                                        <input type="text" name="endereco" value="<?=$tbpessoas['endereco'];?>" class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                        <button type="submit" name="update_person" class="btn btn-primary">
-                                            Atualizar Pessoa
+                                        <button type="submit" name="update_worker" class="btn btn-primary">
+                                            Atualizar Funcionário
                                         </button>
                                     </div>
-
                                 </form>
                                 <?php
                             }
@@ -80,6 +88,5 @@ require_once "verifyloggedin.php";
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

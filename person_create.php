@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("topo.php");
+require_once "verifyloggedin.php";
 ?>
 
 <!doctype html>
@@ -13,7 +14,7 @@ require_once("topo.php");
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Criar aluno</title>
+    <title>Criar pessoa</title>
 </head>
 <body>
   

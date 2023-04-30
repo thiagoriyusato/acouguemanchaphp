@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once("topo.php");
 require 'connection.php';
+require_once("topo.php");
 require_once "verifyloggedin.php";
 ?>
 <!doctype html>
@@ -14,7 +14,7 @@ require_once "verifyloggedin.php";
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Detalhes da Pessoa</title>
+    <title>Detalhes do Funcionário</title>
 </head>
 <body>
 
@@ -24,40 +24,52 @@ require_once "verifyloggedin.php";
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">   
-                        <h4>Dados da Pessoa
-                            <a href="person.php" class="btn btn-danger float-end">VOLTAR</a>
+                        <h4>Dados do Funcionário
+                            <a href="worker.php" class="btn btn-danger float-end">VOLTAR</a>
                         </h4>
                     </div>
                     <div class="card-body">
 
                         <?php
-                        if(isset($_GET['id']))
+                        if(isset($_GET['idFuncionario']))
                         {
-                            $tbpessoas_id = mysqli_real_escape_string($con, $_GET['id']);
-                            $query = "SELECT * FROM tbpessoas WHERE id='$tbpessoas_id' ";
+                            $tbfuncionarios_id = mysqli_real_escape_string($con, $_GET['idFuncionario']);
+                            $query = "SELECT * FROM tbfuncionarios, tbpessoas, tbcargos WHERE tbfuncionarios.id = '$tbfuncionarios_id' AND tbfuncionarios.idPessoa = tbpessoas.id AND tbfuncionarios.idCargo = tbcargos.id";
                             $query_run = mysqli_query($con, $query);
 
                             if(mysqli_num_rows($query_run) > 0)
                             {
-                                $tbpessoas = mysqli_fetch_array($query_run);
+                                $tbfuncionarios = mysqli_fetch_array($query_run);
                                 ?>
                                 
                                     <div class="mb-3">
                                         <label>Nome</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['nome'];?>
+                                            <?=$tbfuncionarios['nome'];?>
                                         </p>
                                     </div>
                                     <div class="mb-3">
                                         <label>Endereço</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['endereco'];?>
+                                            <?=$tbfuncionarios['endereco'];?>
                                         </p>
                                     </div>
                                     <div class="mb-3">
                                         <label>Email</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['email'];?>
+                                            <?=$tbfuncionarios['email'];?>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Cargo</label>
+                                        <p class="form-control">
+                                            <?=$tbfuncionarios['descricao'];?>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Salário</label>
+                                        <p class="form-control">
+                                            <?=$tbfuncionarios['salario'];?>
                                         </p>
                                     </div>
 
@@ -75,6 +87,5 @@ require_once "verifyloggedin.php";
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
