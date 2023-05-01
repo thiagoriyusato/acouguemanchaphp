@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once("topo.php");
 require 'connection.php';
+require_once("topo.php");
 require_once "verifyloggedin.php";
 ?>
 <!doctype html>
@@ -14,7 +14,7 @@ require_once "verifyloggedin.php";
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Detalhes da Pessoa</title>
+    <title>Detalhes da Mercadoria</title>
 </head>
 <body>
 
@@ -24,49 +24,54 @@ require_once "verifyloggedin.php";
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">   
-                        <h4>Dados da Pessoa
-                            <a href="person.php" class="btn btn-danger float-end">VOLTAR</a>
+                        <h4>Dados da mercadoria
+                            <a href="worker.php" class="btn btn-danger float-end">VOLTAR</a>
                         </h4>
                     </div>
                     <div class="card-body">
 
                         <?php
-                        if(isset($_GET['id']))
+                        if(isset($_GET['idProduto']))
                         {
-                            $tbpessoas_id = mysqli_real_escape_string($con, $_GET['id']);
-                            $query = "SELECT * FROM tbpessoas WHERE id='$tbpessoas_id' ";
+                            $tbprodutos_id = mysqli_real_escape_string($con, $_GET['idProduto']);
+                            $query = "SELECT p.preco, p.descricao descricaoProduto, p.categoria categoriaProduto, p.quantidade, f.nome, c.descricao descricaoCategoria FROM tbprodutos p, tbfornecedores f, tbcategoria c WHERE p.id = '$tbprodutos_id' AND p.categoria = c.id AND p.idFornecedor = f.id";
                             $query_run = mysqli_query($con, $query);
 
                             if(mysqli_num_rows($query_run) > 0)
                             {
-                                $tbpessoas = mysqli_fetch_array($query_run);
+                                $tbprodutos = mysqli_fetch_array($query_run);
                                 ?>
                                 
                                     <div class="mb-3">
-                                        <label>Nome</label>
+                                        <label>Descrição</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['nome'];?>
+                                            <?=$tbprodutos['descricaoProduto'];?>
                                         </p>
                                     </div>
                                     <div class="mb-3">
-                                        <label>Endereço</label>
+                                        <label>Preço</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['endereco'];?>
+                                            <?=$tbprodutos['preco'];?>
                                         </p>
                                     </div>
                                     <div class="mb-3">
-                                        <label>CPF</label>
+                                        <label>Categoria</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['cpf'];?>
+                                            <?=$tbprodutos['descricaoCategoria'];?>
                                         </p>
                                     </div>
                                     <div class="mb-3">
-                                        <label>Email</label>
+                                        <label>Quantidade</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['email'];?>
+                                            <?=$tbprodutos['quantidade'];?>
                                         </p>
                                     </div>
-
+                                    <div class="mb-3">
+                                        <label>Fornecedor</label>
+                                        <p class="form-control">
+                                            <?=$tbprodutos['nome'];?>
+                                        </p>
+                                    </div>
                                 <?php
                             }
                             else
@@ -81,6 +86,5 @@ require_once "verifyloggedin.php";
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

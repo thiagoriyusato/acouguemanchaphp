@@ -14,7 +14,7 @@ require_once "verifyloggedin.php";
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Criar pessoa</title>
+    <title>Criar cliente</title>
 </head>
 <body>
   
@@ -27,7 +27,7 @@ require_once "verifyloggedin.php";
                 <div class="card">
                     <div class="card-header">
                         <h4>Adicionar cliente
-                            <a href="person.php" class="btn btn-danger float-end">VOLTAR</a>
+                            <a href="customer.php" class="btn btn-danger float-end">VOLTAR</a>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -50,7 +50,7 @@ require_once "verifyloggedin.php";
                                 <input type="text" name="cpf" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <button type="submit" name="save_person" class="btn btn-primary">Salvar Pessoa</button>
+                                <button type="submit" name="save_customer" class="btn btn-primary">Salvar Cliente</button>
                             </div>
 
                         </form>

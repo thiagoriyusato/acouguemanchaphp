@@ -14,7 +14,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Funcionario</title>
+    <title>Cliente</title>
 </head>
 <body>
   
@@ -26,11 +26,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Detalhes da pessoa
+                        <h4>Detalhes do cliente 
                             <?php
-                        if($_SESSION["tipo"] == 1){
-                            echo "<a href='person_create.php' class='btn btn-primary float-end'>Adicionar Pessoa</a>";
-                        }
+                            echo "<a href='customer_create.php' class='btn btn-primary float-end'>Adicionar Cliente</a>";
+                        
                             ?>
                         </h4>
                     </div>
@@ -43,32 +42,30 @@
                                     <th>Nome</th>
                                     <th>Endereço</th>
                                     <th>CPF</th>
-                                    <th>Email</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                    $query = "SELECT * FROM tbpessoas";
+                                    $query = "SELECT * FROM tbclientes";
                                     $query_run = mysqli_query($con, $query);
 
                                     if(mysqli_num_rows($query_run) > 0)
                                     {
-                                        foreach($query_run as $tbpessoas)
+                                        foreach($query_run as $tbclientes)
                                         {
                                             ?>
                                             <tr>
-                                                <td><?= $tbpessoas['id']; ?></td>
-                                                <td><?= $tbpessoas['nome']; ?></td>
-                                                <td><?= $tbpessoas['endereco']; ?></td>
-                                                <td><?= $tbpessoas['cpf']; ?></td>
-                                                <td><?= $tbpessoas['email']; ?></td>
+                                                <td><?= $tbclientes['id']; ?></td>
+                                                <td><?= $tbclientes['nome']; ?></td>
+                                                <td><?= $tbclientes['endereco']; ?></td>
+                                                <td><?= $tbclientes['CPF']; ?></td>
                                                 <td>
                                                     <?php if($_SESSION["tipo"] == 1){
-                                                        echo "<a href='person_view.php?id={$tbpessoas['id']}' class='btn btn-info btn-sm'>Visualizar</a>";
+                                                        echo "<a href='customer_view.php?id={$tbclientes['id']}' class='btn btn-info btn-sm'>Visualizar</a>";
                                                         echo " ";
-                                                        echo "<a href='person_edit.php?id={$tbpessoas['id']}' class='btn btn-success btn-sm'>Editar</a>";
+                                                        echo "<a href='customer_edit.php?id={$tbclientes['id']}' class='btn btn-success btn-sm'>Editar</a>";
                                                         echo "<form action='code.php' method='POST' class='d-inline'>
-                                                                <button type='submit' name='delete_person' value='{$tbpessoas['id']}' class='btn btn-danger btn-sm'>Deletar</button>
+                                                                <button type='submit' name='delete_customer' value='{$tbclientes['id']}' class='btn btn-danger btn-sm'>Deletar</button>
                                                                 </form>";
                                                     }
                                                     ?>
@@ -79,7 +76,7 @@
                                     }
                                     else
                                     {
-                                        echo "<h5> Nenhuma pessoa cadastrada </h5>";
+                                        echo "<h5> Nenhum cliente cadastrado </h5>";
                                     }
                                 ?>
                                 

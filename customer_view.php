@@ -14,7 +14,7 @@ require_once "verifyloggedin.php";
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Detalhes da Pessoa</title>
+    <title>Detalhes do Cliente</title>
 </head>
 <body>
 
@@ -24,8 +24,8 @@ require_once "verifyloggedin.php";
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">   
-                        <h4>Dados da Pessoa
-                            <a href="person.php" class="btn btn-danger float-end">VOLTAR</a>
+                        <h4>Dados do Cliente
+                            <a href="customer.php" class="btn btn-danger float-end">VOLTAR</a>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -33,40 +33,33 @@ require_once "verifyloggedin.php";
                         <?php
                         if(isset($_GET['id']))
                         {
-                            $tbpessoas_id = mysqli_real_escape_string($con, $_GET['id']);
-                            $query = "SELECT * FROM tbpessoas WHERE id='$tbpessoas_id' ";
+                            $tbclientes_id = mysqli_real_escape_string($con, $_GET['id']);
+                            $query = "SELECT * FROM tbclientes WHERE id='$tbclientes_id' ";
                             $query_run = mysqli_query($con, $query);
 
                             if(mysqli_num_rows($query_run) > 0)
                             {
-                                $tbpessoas = mysqli_fetch_array($query_run);
+                                $tbclientes = mysqli_fetch_array($query_run);
                                 ?>
                                 
                                     <div class="mb-3">
                                         <label>Nome</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['nome'];?>
+                                            <?=$tbclientes['nome'];?>
                                         </p>
                                     </div>
                                     <div class="mb-3">
                                         <label>Endereço</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['endereco'];?>
+                                            <?=$tbclientes['endereco'];?>
                                         </p>
                                     </div>
                                     <div class="mb-3">
                                         <label>CPF</label>
                                         <p class="form-control">
-                                            <?=$tbpessoas['cpf'];?>
+                                            <?=$tbclientes['CPF'];?>
                                         </p>
                                     </div>
-                                    <div class="mb-3">
-                                        <label>Email</label>
-                                        <p class="form-control">
-                                            <?=$tbpessoas['email'];?>
-                                        </p>
-                                    </div>
-
                                 <?php
                             }
                             else

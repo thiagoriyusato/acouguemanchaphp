@@ -15,7 +15,7 @@ require_once "verifyloggedin.php";
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Editar Pessoa</title>
+    <title>Editar Mercadoria</title>
 </head>
 <body>
   
@@ -37,7 +37,7 @@ require_once "verifyloggedin.php";
                         if(isset($_GET['idFuncionario']))
                         {
                             $tbfuncionarios_id = mysqli_real_escape_string($con, $_GET['idFuncionario']);
-                            $query = "SELECT * FROM tbfuncionarios, tbpessoas, tbcargos WHERE tbfuncionarios.id = '$tbfuncionarios_id' AND tbfuncionarios.idPessoa = tbpessoas.id AND tbfuncionarios.idCargo = tbcargos.id";
+                            $query = "SELECT f.id idFuncionario, f.salario, c.id idCargo, c.descricao descricaoCargo FROM tbfuncionarios f, tbcargos c WHERE f.id = '$tbfuncionarios_id' AND f.idCargo = c.id";
                             $query_run = mysqli_query($con, $query);
 
                             if(mysqli_num_rows($query_run) > 0)
@@ -45,24 +45,26 @@ require_once "verifyloggedin.php";
                                 $tbfuncionarios = mysqli_fetch_array($query_run);
                                 ?>
                                 <form action="code.php" method="POST">
-                                    <input type="hidden" name="tbfuncionarios_id" value="<?= $tbfuncionarios['id']; ?>">
+                                    <input type="hidden" name="tbfuncionarios_id" value="<?= $tbfuncionarios['idFuncionario']; ?>">
                                     <div class="mb-3">
                                         <label>Salário</label>
-                                        <input type="text" name="endereco" value="<?=$tbfuncionarios['salario'];?>" class="form-control">
+                                        <input type="text" name="salario" value="<?=$tbfuncionarios['salario'];?>" class="form-control">
                                     </div>
                                     <div class="mb-3">
                                     <label> Cargo </label>
                         <select class="custom-select" name="cargoid">
-                        <option selected>Escolha...</option>
+                        <option selected value="<?=$tbfuncionarios['idCargo']?>"><?php echo $tbfuncionarios['descricaoCargo']; ?></option>
                         <?php 
-                            $query2 = "SELECT * FROM tbcargos";
+                            $query2 = "SELECT id idCargo, descricao FROM tbcargos";
                             $query_run2 = mysqli_query($con, $query2);
                                 foreach($query_run2 as $tbcargos)
                                 {
+                                    if($tbcargos['idCargo'] == $tbfuncionarios['idCargo'])
+                                    continue;
                                     ?>
 
 
-                            <option value="<?php echo $tbcargos['id']; ?>"><?php echo $tbcargos['descricao']; ?></option>
+                            <option value="<?=$tbcargos['idCargo'];?>"><?php echo $tbcargos['descricao']; ?></option>
 
                         <?php }?>
                         </select>
