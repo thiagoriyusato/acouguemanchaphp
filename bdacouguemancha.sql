@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2023 at 05:26 PM
+-- Generation Time: May 01, 2023 at 05:05 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -26,6 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `tbcargos`
 --
+CREATE DATABASE `bdacouguemancha`;
+
+USE `bdacouguemancha`;
 
 CREATE TABLE `tbcargos` (
   `id` int(11) NOT NULL,
@@ -75,6 +78,14 @@ CREATE TABLE `tbclientes` (
   `CPF` varchar(14) NOT NULL,
   `endereco` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbclientes`
+--
+
+INSERT INTO `tbclientes` (`id`, `nome`, `CPF`, `endereco`) VALUES
+(1, 'Joao Augusto', '111.111.111/91', 'jardim nuness'),
+(2, 'Cliente2', '333.333.333/33', 'enderecocliente');
 
 -- --------------------------------------------------------
 
@@ -138,10 +149,10 @@ CREATE TABLE `tbfuncionarios` (
 --
 
 INSERT INTO `tbfuncionarios` (`id`, `idPessoa`, `idCargo`, `salario`) VALUES
-(1, 1, 4, 3000.00),
-(2, 3, 4, 0.00),
-(3, 4, 3, 1000.00),
-(4, 10, 4, 0.00);
+(1, 1, 4, 3002.00),
+(2, 3, 3, 3330.00),
+(3, 4, 1, 10001414.00),
+(6, 10, 2, 1000.00);
 
 -- --------------------------------------------------------
 
@@ -153,6 +164,18 @@ CREATE TABLE `tbpedidos` (
   `id` int(11) NOT NULL,
   `idCliente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbpedidos`
+--
+
+INSERT INTO `tbpedidos` (`id`, `idCliente`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1);
 
 -- --------------------------------------------------------
 
@@ -167,6 +190,14 @@ CREATE TABLE `tbpedidosprodutos` (
   `quantidade` float NOT NULL,
   `preco` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbpedidosprodutos`
+--
+
+INSERT INTO `tbpedidosprodutos` (`id`, `idPedido`, `idProduto`, `quantidade`, `preco`) VALUES
+(1, 1, 1, 2, 110.00),
+(2, 1, 2, 2, 93.98);
 
 -- --------------------------------------------------------
 
@@ -214,31 +245,12 @@ CREATE TABLE `tbprodutos` (
 --
 
 INSERT INTO `tbprodutos` (`id`, `preco`, `categoria`, `quantidade`, `descricao`, `idFornecedor`) VALUES
-(1, 55.00, 1, 10, 'Picanha', 1),
+(1, 55.00, 1, 15, 'Picanha', 1),
 (2, 46.99, 1, 10, 'Alacatra', 1),
 (3, 20.99, 4, 10, 'Linguiça Suína', 1),
 (5, 32.99, 1, 10, 'Ponta de Peito', 1),
-(6, 14.49, 3, 10, 'Peito de Frango', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbstatus`
---
-
-CREATE TABLE `tbstatus` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbstatus`
---
-
-INSERT INTO `tbstatus` (`id`, `descricao`) VALUES
-(1, 'Ativo'),
-(2, 'Inativo'),
-(3, 'Ferias');
+(6, 14.49, 3, 10, 'Peito de Frango', 1),
+(7, 35.99, 1, 10, 'Alcatra', 1);
 
 --
 -- Indexes for dumped tables
@@ -288,7 +300,7 @@ ALTER TABLE `tbfuncionarios`
 --
 ALTER TABLE `tbpedidos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fkPedCli` (`idCliente`);
+  ADD KEY `fk_PedPP` (`idCliente`);
 
 --
 -- Indexes for table `tbpedidosprodutos`
@@ -332,7 +344,7 @@ ALTER TABLE `tbcategoria`
 -- AUTO_INCREMENT for table `tbclientes`
 --
 ALTER TABLE `tbclientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbcontas`
@@ -350,19 +362,19 @@ ALTER TABLE `tbfornecedores`
 -- AUTO_INCREMENT for table `tbfuncionarios`
 --
 ALTER TABLE `tbfuncionarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbpedidos`
 --
 ALTER TABLE `tbpedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbpedidosprodutos`
 --
 ALTER TABLE `tbpedidosprodutos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tbpessoas`
@@ -374,7 +386,7 @@ ALTER TABLE `tbpessoas`
 -- AUTO_INCREMENT for table `tbprodutos`
 --
 ALTER TABLE `tbprodutos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -397,7 +409,8 @@ ALTER TABLE `tbfuncionarios`
 -- Constraints for table `tbpedidos`
 --
 ALTER TABLE `tbpedidos`
-  ADD CONSTRAINT `fkPedCli` FOREIGN KEY (`idCliente`) REFERENCES `tbclientes` (`id`);
+  ADD CONSTRAINT `fkPedCli` FOREIGN KEY (`idCliente`) REFERENCES `tbclientes` (`id`),
+  ADD CONSTRAINT `fk_PedPP` FOREIGN KEY (`idCliente`) REFERENCES `tbclientes` (`id`);
 
 --
 -- Constraints for table `tbpedidosprodutos`
